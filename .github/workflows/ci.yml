@@ -1,0 +1,30 @@
+name: Github CI/CD using github workflows
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    # The 'steps' key must be indented to be part of the 'validate' job.
+    steps:
+      # Step 1: Corrected the action name to 'actions/checkout@v4'.
+      - name: Getting the latest code from the repository
+        uses: actions/checkout@v4
+
+      # Step 2: Fixed the shell script syntax for checking the file.
+      - name: Checking for the index.html file
+        run: |
+          # The 'if' condition needs spaces inside the brackets and a 'then' keyword.
+          # The filename 'index,html' was corrected to 'index.html'.
+          if [ -f 'index.html' ]; then
+            echo "✅ Success: index.html exists."
+          else
+            # If the file doesn't exist, we print an error and exit with a status of 1.
+            # This will cause the GitHub Actions job to fail, which is what you want for a validation check.
+            echo "❌ Failure: index.html does not exist."
+            exit 1
+          fi
